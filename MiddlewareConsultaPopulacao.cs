@@ -14,6 +14,10 @@ namespace AULA13ROTEAMENTOURLS
         {
             next = nextMiddleware;
         }
+        public MiddlewareConsultaPopulacao()
+        {
+            
+        }
 
 
         public async Task Invoke(HttpContext context)
