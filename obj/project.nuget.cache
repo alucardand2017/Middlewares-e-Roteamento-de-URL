@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "cp6+4VrWwT9mgMQUQuQWaRIoNTQjWo+Y8ZEzIGuZWsDcbySxxk+vveT4d81nu1QpHecR+/rjAh5rx81TR8vTmA==",
+  "dgSpecHash": "WFc25fBMaoCitI+Lqq6/zBZ9ABnOAY3ZQZaAfBanfslJBN7IRKWTEj3VvrcT7ovb8wyN66B9NNQIoyTF0W2Ang==",
   "success": true,
   "projectFilePath": "D:\\1_PROJETOS\\PROJETO CANAL RICARDO MAROQUIO\\AULA13ROTEAMENTOURLS\\AULA13ROTEAMENTOURLS.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ander\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
