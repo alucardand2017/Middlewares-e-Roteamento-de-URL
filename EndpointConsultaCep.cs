@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace AULA13ROTEAMENTOURLS
@@ -30,7 +32,12 @@ namespace AULA13ROTEAMENTOURLS
                 html.Append($"<p>Bairro: {objetoCEP.bairro}</p>");
                 html.Append($"<p>Cidade/UF {objetoCEP.localidade}/{objetoCEP.uf}</p>");
                 string localidade = HttpUtility.UrlEncode($"{objetoCEP.localidade}-{objetoCEP.uf}");
-                html.Append($"<p><a href='/pop/{localidade}'> Consultar População</a></p>");
+                
+                LinkGenerator geradorLink = context.RequestServices.GetService<LinkGenerator>();
+                string url = geradorLink.GetPathByRouteValues(
+                context, "consultapop", new {local = localidade});            
+            
+                html.Append($"<p><a href='{url}'> Consultar População</a></p>");
                 await context.Response.WriteAsync(html.ToString());  
             }
         }

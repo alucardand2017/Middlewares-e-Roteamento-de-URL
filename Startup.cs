@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AULA13ROTEAMENTOURLS
@@ -24,7 +25,8 @@ namespace AULA13ROTEAMENTOURLS
                     context.Response.ContentType = "text/plain; charset=utf-8";
                     await context.Response.WriteAsync("Requisição roteada");
                 });
-                endpoints.MapGet("pop/{local}", EndpointConsultaPop.Endpoint);
+                endpoints.MapGet("pop/{local}", EndpointConsultaPop.Endpoint)
+                    .WithMetadata(new RouteNameMetadata("consultapop"));
                 endpoints.MapGet("cep/{cep}", EndpointConsultaCep.Endpoint);
             });
             app.Use(async (context, next) => {
