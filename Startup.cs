@@ -39,10 +39,10 @@ namespace AULA13ROTEAMENTOURLS
                     await context.Response.WriteAsync("Requisição roteada");
                 });
 
-                endpoints.MapGet("pop/{local=São%20Paulo-SP}", EndpointConsultaPop.Endpoint)
+                endpoints.MapGet("pop/{*local=São%20Paulo-SP}", EndpointConsultaPop.Endpoint) //o asterisco desconsidera o separador após o parâmetro na URL
                     .WithMetadata(new RouteNameMetadata("consultapop"));
 
-                endpoints.MapGet("cep/{cep?}", EndpointConsultaCep.Endpoint);
+                endpoints.MapGet("cep/{cep:regex(^\\d{{8}}$)?}", EndpointConsultaCep.Endpoint);
             });
 
             app.Use(async (context, next) => {
