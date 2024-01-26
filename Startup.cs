@@ -11,6 +11,10 @@ namespace AULA13ROTEAMENTOURLS
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RouteOptions>(opt => 
+            {
+                opt.ConstraintMap.Add("parametroLocal", typeof(ConstraintParametroLocal));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,7 +43,7 @@ namespace AULA13ROTEAMENTOURLS
                     await context.Response.WriteAsync("Requisição roteada");
                 });
 
-                endpoints.MapGet("pop/{*local=São%20Paulo-SP}", EndpointConsultaPop.Endpoint) //o asterisco desconsidera o separador após o parâmetro na URL
+                endpoints.MapGet("pop/{*local:parametroLocal}", EndpointConsultaPop.Endpoint) //o asterisco desconsidera o separador após o parâmetro na URL
                     .WithMetadata(new RouteNameMetadata("consultapop"));
 
                 endpoints.MapGet("cep/{cep:regex(^\\d{{8}}$)?}", EndpointConsultaCep.Endpoint);
