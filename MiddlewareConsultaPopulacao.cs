@@ -9,32 +9,27 @@ namespace AULA13ROTEAMENTOURLS
     public class MiddlewareConsultaPopulacao
     {
         private readonly RequestDelegate next;
-
-        public MiddlewareConsultaPopulacao(RequestDelegate nextMiddleware)
-        {
-            next = nextMiddleware;
-        }
         public MiddlewareConsultaPopulacao()
         {
             
         }
-
+        public MiddlewareConsultaPopulacao(RequestDelegate nextMiddleware)
+        {
+            next = nextMiddleware;
+        }
 
         public async Task Invoke(HttpContext context)
         {
-            string[] segmentos = context.Request.Path.ToString().Split("/", System.StringSplitOptions.RemoveEmptyEntries);
-
-            if(segmentos.Length == 2 && segmentos[0] == "pop")
-            {
-                var localidade = HttpUtility.UrlDecode(segmentos[1]);
-                var populacao = (new Random().Next(999, 999999));
-                context.Response.ContentType = "text/html; charset=utf-8";
-                StringBuilder html = new StringBuilder();
-                html.Append($"<h3>População de {localidade.ToUpper()}</h3>");
-                html.Append($"<p>{populacao:N0} habitantes</p>");      
-                await context.Response.WriteAsync(html.ToString());   
-            }
-            else if (next != null)
+            string localidade = HttpUtility.UrlDecode(context.Request.RouteValues["local"] as string);
+           
+            var populacao = (new Random().Next(999, 999999));
+            context.Response.ContentType = "text/html; charset=utf-8";
+            StringBuilder html = new StringBuilder();
+            html.Append($"<h3>População de {localidade.ToUpper()}</h3>");
+            html.Append($"<p>{populacao:N0} habitantes</p>");      
+            await context.Response.WriteAsync(html.ToString());   
+          
+            if (next != null)
             {
                 await next(context);
             }

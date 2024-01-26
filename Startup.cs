@@ -24,8 +24,8 @@ namespace AULA13ROTEAMENTOURLS
                     context.Response.ContentType = "text/plain; charset=utf-8";
                     await context.Response.WriteAsync("Requisição roteada");
                 });
-                endpoints.MapGet("pop/guarulhos-sp", new MiddlewareConsultaPopulacao().Invoke);
-                endpoints.MapGet("cep/01001000", new MiddlewareConsultaCep().Invoke);
+                endpoints.MapGet("pop/{local}", new MiddlewareConsultaPopulacao().Invoke);
+                endpoints.MapGet("cep/{cep}", new MiddlewareConsultaCep().Invoke);
             });
             app.Use(async (context, next) => {
                 context.Response.ContentType = "text/plain; charset=utf-8";

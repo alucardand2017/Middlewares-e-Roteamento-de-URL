@@ -23,31 +23,21 @@ namespace AULA13ROTEAMENTOURLS
 
         public async Task Invoke(HttpContext context)
         {
-            string[] segmentos = context.Request.Path.ToString().
-            Split("/", System.StringSplitOptions.RemoveEmptyEntries);
-            if(segmentos.Length == 2 && segmentos[0] == "cep")
-            {
-                var cep = segmentos[1];
-                var objetoCEP = await ConsultaCep(cep);
-                context.Response.ContentType = "text/html; charset=utf-8";
-
-                StringBuilder html = new StringBuilder();
-
-                html.Append($"<h3>Dados de CEP {objetoCEP.cep}</h3>");
-                html.Append($"<p>Logradouro :{objetoCEP.logradouro}</p>");
-                html.Append($"<p>Bairro: {objetoCEP.bairro}</p>");
-                html.Append($"<p>Cidade/UF {objetoCEP.localidade}/{objetoCEP.uf}</p>");
-
-                string localidade = HttpUtility.UrlEncode($"{objetoCEP.localidade}-{objetoCEP.uf}");
-                html.Append($"<p><a href='/pop/{localidade}'> Consultar População</a></p>");
-
-                await context.Response.WriteAsync(html.ToString());
-            }
-      
-            else if (next != null)
-            {
-                await next(context);
-            }
+            string cep = context.Request.RouteValues["cep"] as string;
+            var objetoCEP = await ConsultaCep(cep);
+            context.Response.ContentType = "text/html; charset=utf-8";
+            StringBuilder html = new StringBuilder();
+            html.Append($"<h3>Dados de CEP {objetoCEP.cep}</h3>");
+            html.Append($"<p>Logradouro :{objetoCEP.logradouro}</p>");
+            html.Append($"<p>Bairro: {objetoCEP.bairro}</p>");
+            html.Append($"<p>Cidade/UF {objetoCEP.localidade}/{objetoCEP.uf}</p>");
+            string localidade = HttpUtility.UrlEncode($"{objetoCEP.localidade}-{objetoCEP.uf}");
+            html.Append($"<p><a href='/pop/{localidade}'> Consultar População</a></p>");
+            await context.Response.WriteAsync(html.ToString());  
+            if (next != null)
+                {
+                    await next(context);
+                }
         }
     
         private async Task<JsonCep> ConsultaCep(string cep)
