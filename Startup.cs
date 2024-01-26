@@ -42,7 +42,7 @@ namespace AULA13ROTEAMENTOURLS
                 endpoints.MapGet("pop/{local=São%20Paulo-SP}", EndpointConsultaPop.Endpoint)
                     .WithMetadata(new RouteNameMetadata("consultapop"));
 
-                endpoints.MapGet("cep/{cep}", EndpointConsultaCep.Endpoint);
+                endpoints.MapGet("cep/{cep?}", EndpointConsultaCep.Endpoint);
             });
 
             app.Use(async (context, next) => {

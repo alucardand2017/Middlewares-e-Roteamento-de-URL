@@ -16,7 +16,7 @@ namespace AULA13ROTEAMENTOURLS
 
         public static async Task Endpoint(HttpContext context)
         {            
-            string cep = context.Request.RouteValues["cep"] as string;
+            string cep = context.Request.RouteValues["cep"] as string?? "01001000";
             var objetoCEP = await ConsultaCep(cep);
             if(objetoCEP == null)
             {
